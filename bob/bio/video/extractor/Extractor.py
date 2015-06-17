@@ -47,7 +47,7 @@ class Extractor (bob.bio.base.extractor.Extractor):
     if self.compressed_io:
       return utils.save_compressed(frame_container, filename, self.extractor.write_feature)
     else:
-      frame_container.save(bob.io.base.HDF5File(filename, 'w'), self.extractor.save_feature)
+      frame_container.save(bob.io.base.HDF5File(filename, 'w'), self.extractor.write_feature)
 
 
   def train(self, data_list, extractor_file):
