@@ -15,5 +15,4 @@ bob.db.verification.filelist
 bob.io.image
 bob.io.video
 bob.bio.base
-bob.bio.face
-bob.bio.gmm
+bob.bio.face # for test purposes
