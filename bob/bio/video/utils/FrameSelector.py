@@ -59,7 +59,7 @@ class FrameSelector:
       # get frames lineraly spread over all frames
       indices = bob.bio.base.selected_indices(count, self.max_frames)
     elif self.selection == 'step':
-      indices = range(self.step/2, count, self.step)[:self.max_frames]
+      indices = range(self.step//2, count, self.step)[:self.max_frames]
     elif self.selection == 'all':
       indices = range(0, count)
 
