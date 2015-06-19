@@ -37,14 +37,19 @@ class Algorithm (bob.bio.base.algorithm.Algorithm):
     self.compressed_io = compressed_io
 
 
+  def _check_feature(self, frames):
+    assert isinstance(frames, utils.FrameContainer)
+
   # PROJECTION
 
   def train_projector(self, data_list, projector_file):
     """Trains the projector using features from selected frames."""
     if self.split_training_features_by_client:
-      training_features = [[frame[1] for frame_container in client_containers for frame in self.frame_selector(frame_container)] for client_containers in data_list]
+      [self._check_feature(frames) for client_frames in data_list for frames in client_frames]
+      training_features = [[frame[1] for frames in client_frames for frame in self.frame_selector(frames)] for client_frames in data_list]
     else:
-      training_features = [frame[1] for frame_container in data_list for frame in self.frame_selector(frame_container)]
+      [self._check_feature(frames) for frames in data_list]
+      training_features = [frame[1] for frames in data_list for frame in self.frame_selector(frames)]
     self.algorithm.train_projector(training_features, projector_file)
 
 
@@ -52,10 +57,11 @@ class Algorithm (bob.bio.base.algorithm.Algorithm):
     return self.algorithm.load_projector(projector_file)
 
 
-  def project(self, frame_container):
+  def project(self, frames):
     """Projects each frame and saves them in a frame container."""
+    self._check_feature(frames)
     fc = utils.FrameContainer()
-    for index, frame, quality in self.frame_selector(frame_container):
+    for index, frame, quality in self.frame_selector(frames):
       # extract features
       projected = self.algorithm.project(frame)
       features = projected if isinstance(projected, (list,tuple)) else projected.copy()
@@ -64,11 +70,12 @@ class Algorithm (bob.bio.base.algorithm.Algorithm):
     return fc
 
 
-  def save_feature(self, frames, projected_file):
+  def write_feature(self, frames, projected_file):
+    self._check_feature(frames)
     if self.compressed_io:
-      return utils.save_compressed(frame_container, projected_file, self.algorithm.write_feature)
+      return utils.save_compressed(frames, projected_file, self.algorithm.write_feature)
     else:
-      frame_container.save(bob.io.base.HDF5File(projected_file, 'w'), self.algorithm.write_feature)
+      frames.save(bob.io.base.HDF5File(projected_file, 'w'), self.algorithm.write_feature)
 
   def read_feature(self, projected_file):
     if self.compressed_io:
@@ -80,7 +87,8 @@ class Algorithm (bob.bio.base.algorithm.Algorithm):
   # ENROLLMENT
 
   def train_enroller(self, training_frames, enroller_file):
-    features = [[frame[1] for frame_container in client_frames for frame in self.enroll_frame_selector(frame_container)] for client_frames in training_frames]
+    [self._check_feature(frames) for client_frames in training_frames for frames in client_frames]
+    features = [[frame[1] for frames in client_frames for frame in self.enroll_frame_selector(frames)] for client_frames in training_frames]
     self.algorithm.train_enroller(features, enroller_file)
 
   def load_enroller(self, enroller_file):
@@ -89,12 +97,13 @@ class Algorithm (bob.bio.base.algorithm.Algorithm):
 
   def enroll(self, enroll_frames):
     """Enrolls the model from features of all images of all videos."""
-    features = [frame[1] for frame_container in enroll_frames for frame in self.enroll_frame_selector(frame_container)]
+    [self._check_feature(frames) for frames in enroll_frames]
+    features = [frame[1] for frames in enroll_frames for frame in self.enroll_frame_selector(frames)]
     return self.algorithm.enroll(features)
 
-  def save_model(self, model, filename):
+  def write_model(self, model, filename):
     """Saves the model using the algorithm's save function."""
-    self.algorithm.save_model(model, filename)
+    self.algorithm.write_model(model, filename)
 
 
   # SCORING
@@ -105,6 +114,7 @@ class Algorithm (bob.bio.base.algorithm.Algorithm):
 
   def read_probe(self, filename):
     """Reads the model using the algorithm's read function."""
+    # TODO: check if it is really necessary that we read other types than FrameContainers here...
     try:
       if self.compressed_io:
         return utils.load_compressed(filename, self.algorithm.read_probe)
@@ -115,6 +125,7 @@ class Algorithm (bob.bio.base.algorithm.Algorithm):
 
   def score(self, model, probe):
     """Computes the score between the given model and the probe, which is a list of frames."""
+    # TODO: check if it is really necessary that we treat other types than FrameContainers here...
     if isinstance(probe, utils.FrameContainer):
       features = [frame[1] for frame in probe]
       return self.algorithm.score_for_multiple_probes(model, features)
@@ -124,5 +135,6 @@ class Algorithm (bob.bio.base.algorithm.Algorithm):
 
   def score_for_multiple_probes(self, model, probes):
     """Computes the score between the given model and the probes, where each probe is a list of frames."""
+    [self._check_feature(frames) for frames in probes]
     probe = [frame[1] for frame in probe for probe in probes]
     return self.algorithm.score_for_multiple_probes(model, probe)

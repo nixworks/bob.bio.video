@@ -24,14 +24,22 @@ class Preprocessor (bob.bio.base.preprocessor.Preprocessor):
     else:
       raise ValueError("The given algorithm could not be interpreter")
 
-    bob.bio.base.preprocessor.Preprocessor.__init__(self, preprocessor=preprocessor, frame_selector=frame_selector, compressed_io=compressed_io)
+    bob.bio.base.preprocessor.Preprocessor.__init__(
+        self,
+        preprocessor=preprocessor,
+        frame_selector=frame_selector,
+        compressed_io=compressed_io
+    )
 
     self.frame_selector = frame_selector
     self.quality_function = quality_function
     self.compressed_io = compressed_io
 
+  def _check_feature(self, frames):
+    assert isinstance(frames, utils.FrameContainer)
 
-  def __call__(self, frame_container, annotations=None):
+
+  def __call__(self, frames, annotations=None):
     """Extracts the frames from the video and returns a frame container.
 
     Faces are extracted for all frames in the given frame container, using the ``preprocessor`` specified in the contructor.
@@ -41,10 +49,13 @@ class Preprocessor (bob.bio.base.preprocessor.Preprocessor):
     The value is another dictionary, building the relation between keypoint names and their location, e.g., {'leye' : (le_y, le_x), 'reye' : (re_y, re_x)}
     The annotations for the according frames, if present, are passed to the preprocessor.
     """
+
+    self._check_feature(frames)
+
     annots = None
     fc = utils.FrameContainer()
 
-    for index, frame, _ in frame_container:
+    for index, frame, _ in frames:
       # if annotations are given, we take them
       if annotations is not None: annots = annotations[index]
 
@@ -75,8 +86,10 @@ class Preprocessor (bob.bio.base.preprocessor.Preprocessor):
     else:
       return utils.FrameContainer(bob.io.base.HDF5File(filename), self.preprocessor.read_data)
 
-  def save_data(self, frame_container, filename):
+  def write_data(self, frames, filename):
+    self._check_feature(frames)
+
     if self.compressed_io:
-      return utils.save_compressed(frame_container, filename, self.preprocessor.write_data)
+      return utils.save_compressed(frames, filename, self.preprocessor.write_data)
     else:
-      frame_container.save(bob.io.base.HDF5File(filename, 'w'), self.preprocessor.write_data)
+      frames.save(bob.io.base.HDF5File(filename, 'w'), self.preprocessor.write_data)
