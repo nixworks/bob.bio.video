@@ -58,12 +58,12 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Bob Example Project'
+project = u'Biometric Recognition in Videos'
 import time
 copyright = u'%s, Idiap Research Institute' % time.strftime('%Y')
 
 # Grab the setup entry
-distribution = pkg_resources.require('bob.example.project')[0]
+distribution = pkg_resources.require('bob.bio.video')[0]
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -187,7 +187,7 @@ html_favicon = ''
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'bob_example_project_doc'
+htmlhelp_basename = 'bob_bio_video_doc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -201,7 +201,7 @@ latex_font_size = '10pt'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'bob_example_project.tex', u'Bob',
+  ('index', 'bob_bio_video.tex', u'Bob',
    u'Biometrics Group, Idiap Research Institute', 'manual'),
 ]
 
@@ -236,7 +236,7 @@ rst_epilog = ''
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'bob.example.project', u'Bob Example Project Documentation', [u'Idiap Research Institute'], 1)
+    ('index', 'bob.bio.video', u'Bob Example Project Documentation', [u'Idiap Research Institute'], 1)
 ]
 
 # Default processing flags for sphinx

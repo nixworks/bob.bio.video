@@ -10,6 +10,4 @@
 Package Documentation
 ---------------------
 
-.. automodule:: bob.example.project
-
-
+.. automodule:: bob.bio.video
