@@ -64,7 +64,7 @@ def test_mobio():
 def test_youtube():
   database = bob.bio.base.load_resource('youtube', 'database')
   try:
-    _check_database_zt(database, training_depends=True, models_depend=True)
-    _check_database_zt(database, protocol = 'fold7', training_depends=True, models_depend=True)
+    _check_database(database, training_depends=True, models_depend=True)
+    _check_database(database, protocol = 'fold7', training_depends=True, models_depend=True)
   except IOError as e:
     raise SkipTest("The database could not be queried; probably the db.sql3 file is missing. Here is the import error: '%s'" % e)

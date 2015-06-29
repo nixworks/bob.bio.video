@@ -5,7 +5,7 @@ import bob.bio.base
 
 youtube_directory = "[YOUR_YOUTUBE_DIRECTORY]"
 
-database = bob.bio.base.database.DatabaseBobZT(
+database = bob.bio.base.database.DatabaseBob(
     database = bob.db.youtube.Database(
         original_directory = youtube_directory,
     ),
