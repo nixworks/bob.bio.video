@@ -10,9 +10,9 @@ def test_verify_video():
   # define dummy parameters
   parameters = [
       '-d', 'dummy-video',
-      '-p', 'bob.bio.video.preprocessor.Preprocessor("dummy")',
-      '-e', 'bob.bio.video.extractor.Extractor("dummy")',
-      '-a', 'bob.bio.video.algorithm.Algorithm("dummy")',
+      '-p', 'bob.bio.video.preprocessor.Wrapper("dummy")',
+      '-e', 'bob.bio.video.extractor.Wrapper("dummy")',
+      '-a', 'bob.bio.video.algorithm.Wrapper("dummy")',
       '--zt-norm',
       '-s', 'test_video',
       '--temp-directory', test_dir,

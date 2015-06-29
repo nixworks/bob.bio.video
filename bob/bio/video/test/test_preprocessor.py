@@ -19,7 +19,7 @@ def test_annotations():
 
   # video preprocessor using a face crop preprocessor
   frame_selector = bob.bio.video.FrameSelector(selection_style="all")
-  preprocessor = bob.bio.video.preprocessor.Preprocessor('face-crop-eyes', frame_selector, compressed_io=False)
+  preprocessor = bob.bio.video.preprocessor.Wrapper('face-crop-eyes', frame_selector, compressed_io=False)
 
   # read original data
   original = preprocessor.read_original_data(image_files)
@@ -41,7 +41,7 @@ def test_detect():
   video_file = pkg_resources.resource_filename("bob.bio.video.test", "data/testvideo.avi")
   frame_selector = bob.bio.video.FrameSelector(max_number_of_frames=3, selection_style="spread")
 
-  preprocessor = bob.bio.video.preprocessor.Preprocessor('face-detect', frame_selector, compressed_io=False)
+  preprocessor = bob.bio.video.preprocessor.Wrapper('face-detect', frame_selector, compressed_io=False)
   video = preprocessor.read_original_data(video_file)
   assert isinstance(video, bob.bio.video.FrameContainer)
 
@@ -61,7 +61,7 @@ def test_flandmark():
   video_file = pkg_resources.resource_filename("bob.bio.video.test", "data/testvideo.avi")
   frame_selector = bob.bio.video.FrameSelector(max_number_of_frames=3, selection_style="spread")
 
-  preprocessor = bob.bio.video.preprocessor.Preprocessor('landmark-detect', frame_selector, compressed_io=False)
+  preprocessor = bob.bio.video.preprocessor.Wrapper('landmark-detect', frame_selector, compressed_io=False)
   video = preprocessor.read_original_data(video_file)
   assert isinstance(video, bob.bio.video.FrameContainer)
 

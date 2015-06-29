@@ -133,12 +133,12 @@ if sphinx.__version__ >= "1.0":
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = ''
+html_logo = 'img/logo.png'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-html_favicon = ''
+html_favicon = 'img/favicon.ico'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -236,18 +236,24 @@ rst_epilog = ''
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'bob.bio.video', u'Bob Example Project Documentation', [u'Idiap Research Institute'], 1)
+    ('index', 'bob.bio.video', u'Video Extensions for bob.bio', [u'Idiap Research Institute'], 1)
 ]
 
 # Default processing flags for sphinx
 autoclass_content = 'both'
 autodoc_member_order = 'bysource'
-autodoc_default_flags = ['members', 'undoc-members', 'inherited-members', 'show-inheritance']
+autodoc_default_flags = ['members', 'inherited-members', 'show-inheritance']
 
 # For inter-documentation mapping:
 from bob.extension.utils import link_documentation
-intersphinx_mapping = link_documentation()
+intersphinx_mapping = link_documentation(['python', 'numpy', 'bob.bio.gmm', 'bob.bio.video', 'bob.bio.csu'])
 
+
+def skip(app, what, name, obj, skip, options):
+  # Do not skip the __call__ and the __str__ functions as we have special implementations for them.
+  if name in ("__call__"):
+    return False
+  return skip
 
 def setup(app):
-  pass
+  app.connect("autodoc-skip-member", skip)

@@ -19,15 +19,15 @@ def test_extractor():
     # load test data
     preprocessed_video_file = pkg_resources.resource_filename("bob.bio.video.test", "data/preprocessed.hdf5")
 
-    preprocessor = bob.bio.video.preprocessor.Preprocessor('face-crop-eyes', compressed_io=False)
+    preprocessor = bob.bio.video.preprocessor.Wrapper('face-crop-eyes', compressed_io=False)
     preprocessed_video = preprocessor.read_data(preprocessed_video_file)
 
-    extractor = bob.bio.video.extractor.Extractor(bob.bio.base.test.dummy.extractor.DummyExtractor(), compressed_io=False)
+    extractor = bob.bio.video.extractor.Wrapper(bob.bio.base.test.dummy.extractor.DummyExtractor(), compressed_io=False)
     extractor.train([preprocessed_video]*5, filename)
 
     assert os.path.exists(filename)
 
-    extractor2 = bob.bio.video.extractor.Extractor("dummy", compressed_io=False)
+    extractor2 = bob.bio.video.extractor.Wrapper("dummy", compressed_io=False)
     extractor2.load(filename)
 
     extracted = extractor2(preprocessed_video)

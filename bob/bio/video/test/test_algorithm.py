@@ -18,18 +18,18 @@ def test_algorithm():
 
   # load test data
   extracted_file = pkg_resources.resource_filename("bob.bio.video.test", "data/extracted.hdf5")
-  extractor = bob.bio.video.extractor.Extractor('dummy', compressed_io=False)
+  extractor = bob.bio.video.extractor.Wrapper('dummy', compressed_io=False)
   extracted = extractor.read_feature(extracted_file)
 
   # use video tool with dummy face recognition tool, which contains all required functionality
-  algorithm = bob.bio.video.algorithm.Algorithm(bob.bio.base.test.dummy.algorithm.DummyAlgorithm(), compressed_io=False)
+  algorithm = bob.bio.video.algorithm.Wrapper(bob.bio.base.test.dummy.algorithm.DummyAlgorithm(), compressed_io=False)
 
   try:
     # projector training
     algorithm.train_projector([extracted] * 25, filename)
     assert os.path.exists(filename)
 
-    algorithm2 = bob.bio.video.algorithm.Algorithm("bob.bio.base.test.dummy.algorithm.DummyAlgorithm()", compressed_io=False)
+    algorithm2 = bob.bio.video.algorithm.Wrapper("bob.bio.base.test.dummy.algorithm.DummyAlgorithm()", compressed_io=False)
     # load projector; will perform checks internally
     algorithm2.load_projector(filename)
 
