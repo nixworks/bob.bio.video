@@ -33,7 +33,7 @@ class DummyDatabase (DatabaseBobZT):
 
   # override the original file names to return a one-element lists of file names
   def original_file_names(self, files):
-    return [[n] for n in self.database.original_file_names(files, self.check_existence)]
+    return [n for n in self.database.original_file_names(files, self.check_existence)]
 
 
 database = DummyDatabase()
