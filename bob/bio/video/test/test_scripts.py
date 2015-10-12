@@ -14,7 +14,7 @@ def test_verify_video():
       '-e', 'bob.bio.video.extractor.Wrapper("dummy")',
       '-a', 'bob.bio.video.algorithm.Wrapper("dummy")',
       '--zt-norm',
-      '-s', 'test_video',
+      '-vs', 'test_video',
       '--temp-directory', test_dir,
       '--result-directory', test_dir,
       '--imports', 'bob.bio.video'
