@@ -18,10 +18,10 @@ before_install:
 - sudo apt-get install -qq --force-yes libatlas-dev libatlas-base-dev liblapack-dev
 - sudo apt-get install -qq --force-yes libavcodec-dev libavformat-dev libswscale-dev
 - sudo apt-get install -qq --force-yes python-opencv libcv-dev libcvaux-dev libopencv-dev
-- pip install --upgrade pip
-- pip install --find-links https://www.idiap.ch/software/bob/wheels/travis/ --use-wheel sphinx nose numpy scipy matplotlib coverage
-- pip install --find-links https://www.idiap.ch/software/bob/wheels/travis/ --use-wheel --pre -r requirements.txt coveralls bob.bio.gmm
-- pip install --find-links https://www.idiap.ch/software/bob/wheels/travis/ --use-wheel --pre -r databases.txt
+- pip install --quiet --upgrade pip
+- pip install --quiet --find-links https://www.idiap.ch/software/bob/wheels/travis/ --use-wheel sphinx nose numpy scipy matplotlib coverage
+- pip install --quiet --find-links https://www.idiap.ch/software/bob/wheels/travis/ --use-wheel --pre -r requirements.txt coveralls bob.bio.gmm
+- pip install --quiet --find-links https://www.idiap.ch/software/bob/wheels/travis/ --use-wheel --pre -r databases.txt
 install:
 - python bootstrap-buildout.py
 - ./bin/buildout buildout:develop=. buildout:extensions=bob.buildout buildout:auto-checkout=
