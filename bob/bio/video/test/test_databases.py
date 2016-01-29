@@ -54,7 +54,7 @@ def _check_database_zt(database, groups = ('dev', 'eval'), protocol = None, trai
 
 
 def test_mobio():
-  database = bob.bio.base.load_resource('mobio-video', 'database')
+  database = bob.bio.base.load_resource('mobio-video', 'database', preferred_package='bob.bio.video')
   try:
     _check_database_zt(database, models_depend=True)
     _check_database_zt(database, protocol = 'female', models_depend=True)
@@ -62,7 +62,7 @@ def test_mobio():
     raise SkipTest("The database could not be queried; probably the db.sql3 file is missing. Here is the import error: '%s'" % e)
 
 def test_youtube():
-  database = bob.bio.base.load_resource('youtube', 'database')
+  database = bob.bio.base.load_resource('youtube', 'database', preferred_package='bob.bio.video')
   try:
     _check_database(database, training_depends=True, models_depend=True)
     _check_database(database, protocol = 'fold7', training_depends=True, models_depend=True)
