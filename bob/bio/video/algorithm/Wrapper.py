@@ -38,7 +38,7 @@ class Wrapper (bob.bio.base.algorithm.Algorithm):
     elif isinstance(algorithm, bob.bio.base.algorithm.Algorithm):
       self.algorithm = algorithm
     else:
-      raise ValueError("The given algorithm could not be interpreter")
+      raise ValueError("The given algorithm could not be interpreted")
 
     bob.bio.base.algorithm.Algorithm.__init__(
         self,
@@ -124,9 +124,8 @@ class Wrapper (bob.bio.base.algorithm.Algorithm):
     for index, frame, quality in self.frame_selector(frames):
       # extract features
       projected = self.algorithm.project(frame)
-      features = projected if isinstance(projected, (list,tuple)) else projected.copy()
       # add image to frame container
-      fc.add(index, features, quality)
+      fc.add(index, projected, quality)
     return fc
 
 

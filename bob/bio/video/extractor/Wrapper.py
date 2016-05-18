@@ -38,7 +38,7 @@ class Wrapper (bob.bio.base.extractor.Extractor):
     elif isinstance(extractor, bob.bio.base.extractor.Extractor):
       self.extractor = extractor
     else:
-      raise ValueError("The given extractor could not be interpreter")
+      raise ValueError("The given extractor could not be interpreted")
 
     self.frame_selector = frame_selector
     self.compressed_io = compressed_io

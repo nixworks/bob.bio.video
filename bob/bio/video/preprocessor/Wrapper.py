@@ -56,7 +56,7 @@ class Wrapper (bob.bio.base.preprocessor.Preprocessor):
     elif isinstance(preprocessor, bob.bio.base.preprocessor.Preprocessor):
       self.preprocessor = preprocessor
     else:
-      raise ValueError("The given algorithm could not be interpreter")
+      raise ValueError("The given preprocessor could not be interpreted")
 
     bob.bio.base.preprocessor.Preprocessor.__init__(
         self,
@@ -139,7 +139,7 @@ class Wrapper (bob.bio.base.preprocessor.Preprocessor):
 
     **Parameters:**
 
-    data : 3d or 4D :py:class:`numpy.ndarray`, or [str]
+    data : 3D or 4D :py:class:`numpy.ndarray`, or [str]
       The original data to read.
 
     **Returns:**
