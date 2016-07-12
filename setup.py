@@ -49,10 +49,10 @@ setup(
     version = open("version.txt").read().rstrip(),
     description = 'Run biometric recognition algorithms on videos',
 
-    url = 'https://www.github.com/<YourInstitution>/<YourPackage>',
+    url = 'https://github.com/bioidiap/bob.bio.video',
     license = 'GPLv3',
-    author = '<YourName>',
-    author_email = '<YourEmail>',
+    author = 'The biometric person recognition group at Idiap, Switzerland',
+    author_email = 'bob-devel@googlegroups.com',
     keywords = 'bob',
 
     # If you have a better, long description of your package, place it on the
