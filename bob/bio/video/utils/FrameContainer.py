@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# vim: set fileencoding=utf-8 :
+
 import bob.bio.base
 import numpy
 

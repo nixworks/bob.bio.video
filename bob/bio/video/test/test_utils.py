@@ -1,11 +1,12 @@
+#!/usr/bin/env python
+# vim: set fileencoding=utf-8 :
+
 import os
 import numpy
 import bob.io.base
 import bob.io.base.test_utils
 import bob.io.image
 import bob.io.video
-import bob.db.verification.utils
-from nose.plugins.skip import SkipTest
 
 import bob.bio.base
 import bob.bio.video

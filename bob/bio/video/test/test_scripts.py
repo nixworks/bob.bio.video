@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# vim: set fileencoding=utf-8 :
+
 from __future__ import print_function
 
 import bob.bio.base

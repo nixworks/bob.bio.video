@@ -1,5 +1,7 @@
+#!/usr/bin/env python
+# vim: set fileencoding=utf-8 :
+
 import os
-import numpy
 import bob.bio.base
 import bob.bio.base.test.dummy.extractor
 import bob.bio.video
@@ -11,6 +13,7 @@ import bob.io.video
 import pkg_resources
 
 regenerate_refs = False
+
 
 def test_extractor():
   filename = bob.io.base.test_utils.temporary_filename()

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# vim: set fileencoding=utf-8 :
+
 import os
 import numpy
 import bob.io.base
@@ -5,9 +8,8 @@ import bob.io.image
 import bob.io.video
 import bob.bio.base
 import bob.bio.video
-import bob.db.verification.utils
+import bob.db.base
 
-from nose.plugins.skip import SkipTest
 import pkg_resources
 
 regenerate_refs = False
@@ -15,7 +17,7 @@ regenerate_refs = False
 def test_annotations():
   # use annotations to grep
   image_files = [pkg_resources.resource_filename("bob.bio.face.test", "data/testimage.jpg")]
-  annotations = {os.path.basename(image_files[0]) : bob.db.verification.utils.read_annotation_file(pkg_resources.resource_filename("bob.bio.face.test", "data/testimage.pos"), 'named')}
+  annotations = {os.path.basename(image_files[0]) : bob.db.base.read_annotation_file(pkg_resources.resource_filename("bob.bio.face.test", "data/testimage.pos"), 'named')}
 
   # video preprocessor using a face crop preprocessor
   frame_selector = bob.bio.video.FrameSelector(selection_style="all")
