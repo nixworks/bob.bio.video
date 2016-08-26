@@ -68,8 +68,6 @@ setup(
     entry_points = {
 
       'bob.bio.database': [
-        'mobio-video       = bob.bio.video.config.database.mobio:database',
-        'youtube           = bob.bio.video.config.database.youtube:database',
         'dummy-video       = bob.bio.video.test.dummy.database:database', # for test purposes only
       ],
 

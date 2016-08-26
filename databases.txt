@@ -1,2 +1,0 @@
-bob.db.mobio
-bob.db.youtube

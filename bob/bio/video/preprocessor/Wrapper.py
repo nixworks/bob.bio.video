@@ -104,8 +104,8 @@ class Wrapper (bob.bio.base.preprocessor.Preprocessor):
     preprocessed : :py:class:`bob.bio.video.FrameContainer`
       A frame container that contains the preprocessed frames.
     """
-
-    self._check_data(frames)
+    if not isinstance(frames, utils.FrameContainer):
+      frames = self.frame_selector(frames)
 
     annots = None
     fc = utils.FrameContainer()

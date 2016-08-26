@@ -1,2 +1,1 @@
 bob.db.atnt
-bob.ip.flandmark
