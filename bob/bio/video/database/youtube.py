@@ -19,7 +19,7 @@ import bob.io.base
 
 class YoutubeBioFile(VideoBioFile):
     def load(self, directory=None, extension='.jpg'):
-        files = os.listdir(self.make_path(directory, ''))
+        files = sorted(os.listdir(self.make_path(directory, '')))
         fc = FrameContainer()
 
         for f in files:
