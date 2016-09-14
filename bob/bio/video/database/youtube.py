@@ -12,6 +12,21 @@
 
 from .database import VideoBioFile
 from bob.bio.base.database import ZTBioDatabase, BioFile
+from bob.bio.video.utils import FrameContainer
+import os
+import bob.io.base
+
+
+class YoutubeBioFile(VideoBioFile):
+    def load(self, directory=None, extension='.jpg'):
+        files = os.listdir(self.make_path(directory, ''))
+        fc = FrameContainer()
+
+        for f in files:
+            if extension == os.path.splitext(f)[1]:
+                file_name = os.path.join(self.make_path(directory, ''), f)
+                fc.add(os.path.basename(file_name), bob.io.base.load(file_name))
+        return fc
 
 
 class YoutubeBioDatabase(ZTBioDatabase):
@@ -38,12 +53,12 @@ class YoutubeBioDatabase(ZTBioDatabase):
 
     def objects(self, groups=None, protocol=None, purposes=None, model_ids=None, **kwargs):
         retval = self.__db.objects(groups=groups, protocol=protocol, purposes=purposes, model_ids=model_ids, **kwargs)
-        return [VideoBioFile(client_id=f.client_id, path=f.path, file_id=f.id) for f in retval]
+        return [YoutubeBioFile(BioFile(client_id=f.client_id, path=f.path, file_id=f.id)) for f in retval]
 
     def tobjects(self, groups=None, protocol=None, model_ids=None, **kwargs):
         retval = self.__db.tobjects(groups=groups, protocol=protocol, model_ids=model_ids, **kwargs)
-        return [VideoBioFile(client_id=f.client_id, path=f.path, file_id=f.id) for f in retval]
+        return [YoutubeBioFile(BioFile(client_id=f.client_id, path=f.path, file_id=f.id)) for f in retval]
 
     def zobjects(self, groups=None, protocol=None, **kwargs):
         retval = self.__db.zobjects(groups=groups, protocol=protocol, **kwargs)
-        return [VideoBioFile(client_id=f.client_id, path=f.path, file_id=f.id) for f in retval]
+        return [YoutubeBioFile(BioFile(client_id=f.client_id, path=f.path, file_id=f.id)) for f in retval]

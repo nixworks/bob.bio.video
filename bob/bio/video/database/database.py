@@ -8,6 +8,7 @@
 """
 
 from bob.bio.base.database.file import BioFile
+from bob.bio.video.utils.FrameSelector import FrameSelector
 
 
 class VideoBioFile(BioFile):
@@ -19,5 +20,9 @@ class VideoBioFile(BioFile):
         super(VideoBioFile, self).__init__(client_id=f.client_id, path=f.path, file_id=f.id)
 
         self.__f = f
+
+    def load(self, directory=None, extension='.avi'):
+        return FrameSelector()(self.make_path(directory, extension))
+
 
 
