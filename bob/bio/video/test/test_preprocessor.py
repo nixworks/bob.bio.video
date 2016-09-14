@@ -16,7 +16,7 @@ regenerate_refs = False
 
 def test_annotations():
     original_path = pkg_resources.resource_filename("bob.bio.face.test", "")
-    image_files = DummyBioFile(bob.bio.base.database.BioFile(client_id=1, file_id=1, path="data/testimage"))
+    image_files = DummyBioFile(client_id=1, file_id=1, path="data/testimage")
 
     # use annotations to grep
     annotations = {os.path.basename(image_files.make_path(original_path, ".jpg")): bob.db.base.read_annotation_file(
@@ -49,8 +49,7 @@ def test_detect():
 
     # load test video
     original_path = pkg_resources.resource_filename("bob.bio.video.test", "")
-    video_object = bob.bio.video.database.VideoBioFile(bob.bio.base.database.BioFile(
-                                                       client_id=1, file_id=1, path="data/testvideo"))
+    video_object = bob.bio.video.database.VideoBioFile(client_id=1, file_id=1, path="data/testvideo")
 
     frame_selector = bob.bio.video.FrameSelector(max_number_of_frames=3, selection_style="spread")
     preprocessor = bob.bio.video.preprocessor.Wrapper('face-detect', frame_selector, compressed_io=False,
@@ -76,8 +75,7 @@ def test_flandmark():
         return frame_selector(video_object.make_path(original_path, original_extension))
 
     original_path = pkg_resources.resource_filename("bob.bio.video.test", "")
-    video_object = bob.bio.video.database.VideoBioFile(bob.bio.base.database.BioFile(
-                                                       client_id=1, file_id=1, path="data/testvideo"))
+    video_object = bob.bio.video.database.VideoBioFile(client_id=1, file_id=1, path="data/testvideo")
     frame_selector = bob.bio.video.FrameSelector(max_number_of_frames=3, selection_style="spread")
 
     preprocessor = bob.bio.video.preprocessor.Wrapper('landmark-detect', frame_selector, compressed_io=False,

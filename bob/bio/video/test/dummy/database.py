@@ -31,7 +31,7 @@ class DummyDatabase(ZTBioDatabase):
         self.__db = bob.db.atnt.Database()
 
     def _make_bio(self, files):
-      return [DummyBioFile(BioFile(client_id=f.client_id, path=f.path, file_id=f.id)) for f in files]
+      return [DummyBioFile(client_id=f.client_id, path=f.path, file_id=f.id) for f in files]
 
     def model_ids_with_protocol(self, groups=None, protocol=None, **kwargs):
         return self.__db.model_ids(groups, protocol)
@@ -53,11 +53,6 @@ class DummyDatabase(ZTBioDatabase):
 
     def z_probe_files(self, group='dev'):
         return self.probe_files(None, group)
-
-    # override all_files to return a one-element lists of files
-    #def all_files(self, groups):
-        #return [[n] for n in super(DummyDatabase, self).all_files(groups)]
-        #return [[n] for n in super(DummyDatabase, self).all_files(groups)]
 
     def file_names(self, files, directory, extension):
         if isinstance(files[0], list):

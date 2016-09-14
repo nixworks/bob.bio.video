@@ -12,14 +12,12 @@ from bob.bio.video.utils.FrameSelector import FrameSelector
 
 
 class VideoBioFile(BioFile):
-    def __init__(self, f):
+    def __init__(self, client_id, path, file_id):
         """
         Initializes this File object with an File equivalent for
         VoxForge database.
         """
-        super(VideoBioFile, self).__init__(client_id=f.client_id, path=f.path, file_id=f.id)
-
-        self.__f = f
+        super(VideoBioFile, self).__init__(client_id=client_id, path=path, file_id=file_id)
 
     def load(self, directory=None, extension='.avi'):
         return FrameSelector()(self.make_path(directory, extension))
