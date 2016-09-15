@@ -65,10 +65,12 @@ setup(
     #
     # In this simple example we will create a single program that will print
     # the version of bob.
-    entry_points = {
+    entry_points={
 
       'bob.bio.database': [
-        'dummy-video       = bob.bio.video.test.dummy.database:database', # for test purposes only
+        'dummy-video       = bob.bio.video.test.dummy.database:database',# for test purposes only
+        'mobio             = bob.bio.video.config.database.mobio:database',
+        'youtube             = bob.bio.video.config.database.youtube:database',
       ],
 
     },

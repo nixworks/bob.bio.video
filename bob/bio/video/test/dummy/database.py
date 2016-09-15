@@ -1,5 +1,18 @@
-from bob.bio.db import ZTBioDatabase
+from bob.bio.base.database import ZTBioDatabase
 from bob.bio.base.test.utils import atnt_database_directory
+from bob.bio.base.database.file import BioFile
+from bob.bio.video.database import VideoBioFile
+from bob.bio.video.utils import FrameContainer
+import bob.io.base
+import os
+
+
+class DummyBioFile(VideoBioFile):
+    def load(self, directory=None, extension='.pgm'):
+        file_name = self.make_path(directory, extension)
+        fc = FrameContainer()
+        fc.add(os.path.basename(file_name), bob.io.base.load(file_name))
+        return fc
 
 
 class DummyDatabase(ZTBioDatabase):
@@ -17,11 +30,14 @@ class DummyDatabase(ZTBioDatabase):
         import bob.db.atnt
         self.__db = bob.db.atnt.Database()
 
+    def _make_bio(self, files):
+      return [DummyBioFile(client_id=f.client_id, path=f.path, file_id=f.id) for f in files]
+
     def model_ids_with_protocol(self, groups=None, protocol=None, **kwargs):
         return self.__db.model_ids(groups, protocol)
 
     def objects(self, groups=None, protocol=None, purposes=None, model_ids=None, **kwargs):
-        return self.__db.objects(model_ids, groups, purposes, protocol, **kwargs)
+        return self._make_bio(self.__db.objects(model_ids, groups, purposes, protocol, **kwargs))
 
     def tobjects(self, groups=None, protocol=None, model_ids=None, **kwargs):
         return []
@@ -37,10 +53,6 @@ class DummyDatabase(ZTBioDatabase):
 
     def z_probe_files(self, group='dev'):
         return self.probe_files(None, group)
-
-    # override all_files to return a one-element lists of files
-    def all_files(self, groups):
-        return [[n] for n in super(DummyDatabase, self).all_files(groups)]
 
     def file_names(self, files, directory, extension):
         if isinstance(files[0], list):

@@ -2,7 +2,7 @@ from .utils import *
 from . import preprocessor
 from . import extractor
 from . import algorithm
-
+from . import database
 from . import test
 
 def get_config():
