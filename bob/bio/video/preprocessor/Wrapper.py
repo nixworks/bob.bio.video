@@ -41,6 +41,11 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
       Use compression to write the resulting preprocessed HDF5 files.
       This is experimental and might cause trouble.
       Use this flag with care.
+
+    read_original_data:
+       Function that loads the raw data.
+       If not explicitly defined the raw data will be loaded by :py:method:`bob.bio.base.database.VideoBioFile.load`
+
     """
 
     def __init__(self,

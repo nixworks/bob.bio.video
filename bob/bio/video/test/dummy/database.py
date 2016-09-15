@@ -8,7 +8,7 @@ import os
 
 
 class DummyBioFile(VideoBioFile):
-    def load(self, directory=None, extension='.avi'):
+    def load(self, directory=None, extension='.pgm'):
         file_name = self.make_path(directory, extension)
         fc = FrameContainer()
         fc.add(os.path.basename(file_name), bob.io.base.load(file_name))
