@@ -3,12 +3,8 @@
 # Tiago de Freitas Pereira <tiago.pereira@idiap.ch>
 # Wed 20 July 14:43:22 CEST 2016
 
-"""
-  Verification API for bob.db.voxforge
-"""
-
 from bob.bio.base.database.file import BioFile
-from bob.bio.video.utils.FrameSelector import FrameSelector
+from ..utils import FrameSelector
 
 
 class VideoBioFile(BioFile):
@@ -19,8 +15,5 @@ class VideoBioFile(BioFile):
         """
         super(VideoBioFile, self).__init__(client_id=client_id, path=path, file_id=file_id)
 
-    def load(self, directory=None, extension='.avi'):
-        return FrameSelector()(self.make_path(directory, extension))
-
-
-
+    def load(self, directory=None, extension='.avi', frame_selector = FrameSelector()):
+        return frame_selector(self.make_path(directory, extension))

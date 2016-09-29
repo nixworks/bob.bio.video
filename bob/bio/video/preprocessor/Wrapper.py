@@ -42,9 +42,9 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
       This is experimental and might cause trouble.
       Use this flag with care.
 
-    read_original_data:
+    read_original_data: callable or ``None``
        Function that loads the raw data.
-       If not explicitly defined the raw data will be loaded by :py:method:`bob.bio.base.database.VideoBioFile.load`
+       If not explicitly defined the raw data will be loaded by :py:method:`bob.bio.base.database.VideoBioFile.load`. using the specified ``frame_selector``
 
     """
 
@@ -53,8 +53,15 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
                  frame_selector=utils.FrameSelector(),
                  quality_function=None,
                  compressed_io=False,
-                 read_original_data=lambda biofile, directory, extension: biofile.load(directory, extension)
+                 read_original_data=None
                  ):
+
+        def _read_video_data(biofile, directory, extension):
+          """Read video data using the frame_selector of this object"""
+          return biofile.load(directory, extension, frame_selector)
+
+        if read_original_data is None:
+          read_original_data = _read_video_data
 
         # load preprocessor configuration
         if isinstance(preprocessor, str):
@@ -64,6 +71,7 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
         else:
             raise ValueError("The given preprocessor could not be interpreted")
 
+
         bob.bio.base.preprocessor.Preprocessor.__init__(
             self,
             preprocessor=preprocessor,
@@ -72,7 +80,6 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
             read_original_data=read_original_data
         )
 
-        self.frame_selector = frame_selector
         self.quality_function = quality_function
         self.compressed_io = compressed_io
 
@@ -107,9 +114,6 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
         preprocessed : :py:class:`bob.bio.video.FrameContainer`
           A frame container that contains the preprocessed frames.
         """
-        if not isinstance(frames, utils.FrameContainer):
-            frames = self.frame_selector(frames)
-
         annots = None
         fc = utils.FrameContainer()
 
