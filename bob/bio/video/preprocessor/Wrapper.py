@@ -44,7 +44,7 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
 
     read_original_data: callable or ``None``
        Function that loads the raw data.
-       If not explicitly defined the raw data will be loaded by :py:method:`bob.bio.base.database.VideoBioFile.load`. using the specified ``frame_selector``
+       If not explicitly defined the raw data will be loaded by :py:meth:`bob.bio.video.database.VideoBioFile.load`. using the specified ``frame_selector``
 
     """
 
@@ -166,7 +166,7 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
         **Parameters:**
 
         frames : :py:class:`bob.bio.video.FrameContainer`
-          The preprocessed frames, as returned by the :py:meth:`__call__` function.
+          The preprocessed frames, as returned by the `__call__` function.
 
         filename : str
           The name of the preprocessed data file to write.
