@@ -44,16 +44,12 @@ def test_annotations():
 
 def test_detect():
 
-    def read_original_data(video_object, original_path, original_extension):
-        return frame_selector(video_object.make_path(original_path, original_extension))
-
     # load test video
     original_path = pkg_resources.resource_filename("bob.bio.video.test", "")
     video_object = bob.bio.video.database.VideoBioFile(client_id=1, file_id=1, path="data/testvideo")
 
     frame_selector = bob.bio.video.FrameSelector(max_number_of_frames=3, selection_style="spread")
-    preprocessor = bob.bio.video.preprocessor.Wrapper('face-detect', frame_selector, compressed_io=False,
-                                                      read_original_data=read_original_data)
+    preprocessor = bob.bio.video.preprocessor.Wrapper('face-detect', frame_selector, compressed_io=False)
 
     video = preprocessor.read_original_data(video_object, original_path,".avi")
     assert isinstance(video, bob.bio.video.FrameContainer)
@@ -71,15 +67,11 @@ def test_detect():
 
 def test_flandmark():
 
-    def read_original_data(video_object, original_path, original_extension):
-        return frame_selector(video_object.make_path(original_path, original_extension))
-
     original_path = pkg_resources.resource_filename("bob.bio.video.test", "")
     video_object = bob.bio.video.database.VideoBioFile(client_id=1, file_id=1, path="data/testvideo")
     frame_selector = bob.bio.video.FrameSelector(max_number_of_frames=3, selection_style="spread")
 
-    preprocessor = bob.bio.video.preprocessor.Wrapper('landmark-detect', frame_selector, compressed_io=False,
-                                                      read_original_data=read_original_data)
+    preprocessor = bob.bio.video.preprocessor.Wrapper('landmark-detect', frame_selector, compressed_io=False)
     video = preprocessor.read_original_data(video_object, original_path, ".avi")
     assert isinstance(video, bob.bio.video.FrameContainer)
 
