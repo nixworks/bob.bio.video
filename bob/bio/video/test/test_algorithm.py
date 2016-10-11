@@ -71,5 +71,5 @@ def test_algorithm():
 
   # score
   score = algorithm.score(model, projected)
-  ref = 579.435848
+  ref = 751.924863
   assert abs(score - ref) < 1e-4, "The score %f is not close to %f" % (score, ref)
