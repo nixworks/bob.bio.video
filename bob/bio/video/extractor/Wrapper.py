@@ -118,7 +118,7 @@ class Wrapper (bob.bio.base.extractor.Extractor):
     **Parameters:**
 
     frames : :py:class:`bob.bio.video.FrameContainer`
-      The extracted features for the selected frames, as returned by the :py:meth:`__call__` function.
+      The extracted features for the selected frames, as returned by the `__call__` function.
 
     filename : str
       The file name to write the  extracted feature into.

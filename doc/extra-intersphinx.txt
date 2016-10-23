@@ -1,3 +1,5 @@
 python
 numpy
 bob.bio.gmm
+bob.db.mobio
+bob.db.youtube
