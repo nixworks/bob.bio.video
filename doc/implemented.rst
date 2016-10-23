@@ -27,3 +27,5 @@ Details
 .. automodule:: bob.bio.video.extractor
 
 .. automodule:: bob.bio.video.algorithm
+
+.. automodule:: bob.bio.video.database

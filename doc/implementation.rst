@@ -8,7 +8,7 @@ Wrapper classes
 
 The tools implemented in this package provide wrapper classes for preprocessing, feature extraction and face recognition algorithms that are implemented in other packages of ``bob.bio``.
 The basic idea is that the wrapped algorithms are provided with several frames of the video.
-For this purpose, the :py:class:`bob.bio.video.utils.FrameSelector` can be applied to select one or several frames from the source video.
+For this purpose, the :py:class:`bob.bio.video.FrameSelector` can be applied to select one or several frames from the source video.
 For each of the selected frames, the faces are aligned -- either using hand-labeled data, or after detecting the faces using :py:class:`bob.bio.face.preprocessor.FaceDetect`.
 Afterward, features are extracted, models are enrolled using several frames per video, and the scoring procedure fuses the scores from one model and several probe frames of a probe video.
 If one of the base algorithms requires training, the wrapper classes provide these information accordingly.
@@ -53,7 +53,7 @@ Hence, when you want to run an experiment using the video wrapper classes, you m
 Databases
 ~~~~~~~~~
 
-All video databases defined here rely on the :py:class:`bob.bio.base.BioDatabase` interface, which in turn uses the `verification_databases <https://gitlab.idiap.ch/bob/bob/wikis/Packages>`_.
+All video databases defined here rely on the :py:class:`bob.bio.base.database.BioDatabase` interface, which in turn uses the `verification_databases <https://gitlab.idiap.ch/bob/bob/wikis/Packages>`_.
 
 After downloading and extracting the original data of the data sets, it is necessary that the scripts know, where the data was installed.
 For this purpose, the ``./bin/verify.py`` script can read a special file, where those directories are stored, see :ref:`bob.bio.base.installation`.

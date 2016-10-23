@@ -11,7 +11,7 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
     """Wrapper class to run image preprocessing algorithms on video data.
 
     This class provides functionality to read original video data from several databases.
-    So far, the video content from :py:class:`bob.db.mobio` and the image list content from :py:class:`bob.db.youtube` are supported.
+    So far, the video content from :ref:`bob.db.mobio <bob.db.mobio>` and the image list content from :ref:`bob.db.youtube <bob.db.youtube>` are supported.
 
     Furthermore, frames are extracted from these video data, and a ``preprocessor`` algorithm is applied on all selected frames.
     The preprocessor can either be provided as a registered resource, i.e., one of :ref:`bob.bio.face.preprocessors`, or an instance of a preprocessing class.
@@ -44,7 +44,8 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
 
     read_original_data: callable or ``None``
        Function that loads the raw data.
-       If not explicitly defined the raw data will be loaded by :py:meth:`bob.bio.video.database.VideoBioFile.load`. using the specified ``frame_selector``
+       If not explicitly defined the raw data will be loaded by :py:meth:`bob.bio.video.database.VideoBioFile.load`
+       using the specified ``frame_selector``
 
     """
 
