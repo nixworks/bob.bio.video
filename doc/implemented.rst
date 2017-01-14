@@ -16,11 +16,19 @@ Summary
    bob.bio.video.extractor.Wrapper
    bob.bio.video.algorithm.Wrapper
 
+Databases
+~~~~~~~~~
+
+.. autosummary::
+   bob.bio.video.database.MobioBioDatabase
+   bob.bio.video.database.YoutubeBioDatabase
 
 Details
 -------
 
 .. automodule:: bob.bio.video
+
+.. automodule:: bob.bio.video.database
 
 .. automodule:: bob.bio.video.preprocessor
 
