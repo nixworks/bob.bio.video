@@ -53,7 +53,7 @@ Hence, when you want to run an experiment using the video wrapper classes, you m
 Databases
 ~~~~~~~~~
 
-All video databases defined here rely on the :py:class:`bob.bio.base.database.BioDatabase` interface, which in turn uses the `verification_databases <https://gitlab.idiap.ch/bob/bob/wikis/Packages>`_.
+All video databases defined here rely on the :py:class:`bob.bio.base.database.BioDatabase` interface, which in turn uses the `verification_databases <https://www.idiap.ch/software/bob/packages>`_.
 
 After downloading and extracting the original data of the data sets, it is necessary that the scripts know, where the data was installed.
 For this purpose, the ``./bin/verify.py`` script can read a special file, where those directories are stored, see :ref:`bob.bio.base.installation`.
