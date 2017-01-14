@@ -16,6 +16,14 @@ Summary
    bob.bio.video.extractor.Wrapper
    bob.bio.video.algorithm.Wrapper
 
+Databases
+~~~~~~~~~
+
+.. autosummary::
+
+   bob.bio.video.database.MobioBioDatabase
+   bob.bio.video.database.YoutubeBioDatabase
+
 
 Details
 -------
