@@ -9,9 +9,9 @@
    :target: https://gitlab.idiap.ch/bob/bob.bio.video/commits/master
 .. image:: https://img.shields.io/badge/gitlab-project-0000c0.svg
    :target: https://gitlab.idiap.ch/bob/bob.bio.video
-.. image:: http://img.shields.io/pypi/v/bob.bio.video.png
+.. image:: http://img.shields.io/pypi/v/bob.bio.video.svg
    :target: https://pypi.python.org/pypi/bob.bio.video
-.. image:: http://img.shields.io/pypi/dm/bob.bio.video.png
+.. image:: http://img.shields.io/pypi/dm/bob.bio.video.svg
    :target: https://pypi.python.org/pypi/bob.bio.video
 
 
