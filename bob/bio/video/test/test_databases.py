@@ -35,7 +35,7 @@ def test_youtube():
         raise SkipTest(
             "The database could not queried; probably the db.sql3 file is missing. Here is the error: '%s'" % e)
     try:
-        _check_annotations(database, limit_files=1000)
+        _check_annotations(database, limit_files=1000, topleft=True, framed=True)
     except IOError as e:
         raise SkipTest(
             "The annotations could not be queried; probably the annotation files are missing. Here is the error: '%s'" % e)
@@ -49,8 +49,3 @@ def test_mobio():
     except IOError as e:
         raise SkipTest(
             "The database could not queried; probably the db.sql3 file is missing. Here is the error: '%s'" % e)
-    try:
-        _check_annotations(database, required=False, limit_files=1000)
-    except IOError as e:
-        raise SkipTest(
-            "The annotations could not be queried; probably the annotation files are missing. Here is the error: '%s'" % e)

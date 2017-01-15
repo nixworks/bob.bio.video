@@ -69,4 +69,8 @@ class MobioBioDatabase(ZTBioDatabase):
         return [MobioBioFile(f) for f in retval]
 
     def annotations(self, myfile):
-        return self._db.annotations(myfile._f)
+        '''
+        Annotations are not available when using videos
+        '''
+        return None
+        # return self._db.annotations(myfile._f)
