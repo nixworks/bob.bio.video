@@ -12,7 +12,7 @@
 
 from .database import VideoBioFile
 from bob.bio.base.database import ZTBioDatabase
-from bob.bio.video.utils import FrameContainer
+from bob.bio.video.utils import FrameContainer, FrameSelector
 import os
 import bob.io.base
 
@@ -23,12 +23,13 @@ class YoutubeBioFile(VideoBioFile):
         super(YoutubeBioFile, self).__init__(client_id=f.client_id, path=f.path, file_id=f.id)
         self._f = f
 
-    def load(self, directory=None, extension='.jpg'):
+    def load(self, directory=None, extension='.jpg', frame_selector=FrameSelector()):
         if extension in (None, '.jpg', '/*.jpg'):
-            files = sorted(os.listdir(self.make_path(directory, '')))
+            base_dir = self.make_path(directory, '')
+            files = [os.path.join(base_dir, f) for f in sorted(os.listdir(base_dir))]
             fc = FrameContainer()
 
-            for f in files:
+            for f in frame_selector(files):
                 if extension == os.path.splitext(f)[1]:
                     file_name = os.path.join(self.make_path(directory, ''), f)
                     fc.add(os.path.basename(file_name), bob.io.base.load(file_name))
