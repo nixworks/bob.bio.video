@@ -85,3 +85,6 @@ class YoutubeBioDatabase(ZTBioDatabase):
 
     def annotations(self, myfile):
         return self._db.annotations(myfile._f)
+
+    def client_id_from_model_id(self, model_id, group='dev'):
+        return self._db.get_client_id_from_file_id(model_id)
