@@ -23,16 +23,23 @@ class YoutubeBioFile(VideoBioFile):
         super(YoutubeBioFile, self).__init__(client_id=f.client_id, path=f.path, file_id=f.id)
         self._f = f
 
-    def load(self, directory=None, extension='.jpg', frame_selector=FrameSelector()):
-        if extension in (None, '.jpg', '/*.jpg'):
-            base_dir = self.make_path(directory, '')
-            files = [os.path.join(base_dir, f) for f in sorted(os.listdir(base_dir))]
-            fc = FrameContainer()
+    def files(self, directory=None, extension=".jpg"):
+        base_dir = self.make_path(directory, '')
+        # collect all files from the data directory
+        files = [os.path.join(base_dir, f) for f in sorted(os.listdir(base_dir))]
+        # filter files with the given extension
+        if extension is not None:
+            files = [f for f in files if os.path.splitext(f)[1] == extension]
+        return files
 
+
+    def load(self, directory=None, extension=None, frame_selector=FrameSelector()):
+        if extension in (None, '.jpg'):
+            fc = FrameContainer()
+            files = self.files(directory, extension)
             for f in frame_selector(files):
-                if extension == os.path.splitext(f)[1]:
-                    file_name = os.path.join(self.make_path(directory, ''), f)
-                    fc.add(os.path.basename(file_name), bob.io.base.load(file_name))
+                file_name = os.path.join(self.make_path(directory, ''), f)
+                fc.add(os.path.basename(file_name), bob.io.base.load(file_name))
             return fc
         else:
             return super(YoutubeBioFile, self).load(directory, extension)
@@ -40,15 +47,15 @@ class YoutubeBioFile(VideoBioFile):
 
 class YoutubeBioDatabase(ZTBioDatabase):
     """
-    YOUTUBE database implementation of bob.bio.base.database.ZTDatabase interface.
-    It is an extension of an SQL-based database interface, which directly talks to YOUTUBE database, for
-    verification experiments (good to use in bob.bio.base framework).
+    YouTube Faces database implementation of :py:class:`bob.bio.base.database.ZTBioDatabase` interface.
+    It is an extension of an SQL-based database interface, which directly talks to :py:class:`bob.db.youtube.Database` database, for
+    verification experiments (good to use in ``bob.bio`` framework).
     """
 
     def __init__(
             self,
             original_directory=None,
-            original_extension='/*.jpg',
+            original_extension='.jpg',
             annotation_extension='.labeled_faces.txt',
             **kwargs
     ):
