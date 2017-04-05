@@ -33,7 +33,7 @@ def test_youtube():
         check_database_zt(database, training_depends=True, models_depend=True)
     except IOError as e:
         raise SkipTest(
-            "The database could not queried; probably the db.sql3 file is missing. Here is the error: '%s'" % e)
+            "The database could not be queried; probably the db.sql3 file is missing. Here is the error: '%s'" % e)
     try:
         _check_annotations(database, limit_files=1000, topleft=True, framed=True)
     except IOError as e:
@@ -48,4 +48,4 @@ def test_mobio():
         check_database_zt(database, models_depend=True)
     except IOError as e:
         raise SkipTest(
-            "The database could not queried; probably the db.sql3 file is missing. Here is the error: '%s'" % e)
+            "The database could not be queried; probably the db.sql3 file is missing. Here is the error: '%s'" % e)
