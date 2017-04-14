@@ -42,7 +42,11 @@ class FrameContainer:
         frame_id = str(path[6:])
         hdf5.cd(path)
         # Read data
-        data = load_function(hdf5)
+        try:
+          data = load_function(hdf5)
+        except Exception as e:
+          logger.error("Failed to read frame %s", frame_id, exc_info=e)
+          data = None
 
         # read quality, if present
         quality = hdf5.read("FrameQuality") if hdf5.has_key("FrameQuality") else None
@@ -59,7 +63,8 @@ class FrameContainer:
     for frame_id, data, quality in self:
       hdf5.create_group("Frame_%s" % frame_id)
       hdf5.cd("Frame_%s" % frame_id)
-      save_function(data, hdf5)
+      if data is not None:
+        save_function(data, hdf5)
       if quality is not None:
         hdf5.set("FrameQuality", quality)
       hdf5.cd("..")
