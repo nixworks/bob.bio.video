@@ -45,7 +45,7 @@ Hence, when you want to run an experiment using the video wrapper classes, you m
 
 .. code-block:: sh
 
-   ./bin/verify.py --database youtube --preprocessor 'bob.bio.video.preprocessor.Wrapper("landmark-detect")' --features 'bob.bio.video.extractor.Wrapper("dct-blocks")' --algorithm 'bob.bio.video.algorithm.Wrapper("gmm")' ...
+   verify.py --database youtube --preprocessor 'bob.bio.video.preprocessor.Wrapper("landmark-detect")' --features 'bob.bio.video.extractor.Wrapper("dct-blocks")' --algorithm 'bob.bio.video.algorithm.Wrapper("gmm")' ...
 
 
 .. _bob.bio.video.databases:
@@ -56,7 +56,7 @@ Databases
 All video databases defined here rely on the :py:class:`bob.bio.base.database.BioDatabase` interface, which in turn uses the `verification_databases <https://www.idiap.ch/software/bob/packages>`_.
 
 After downloading and extracting the original data of the data sets, it is necessary that the scripts know, where the data was installed.
-For this purpose, the ``./bin/verify.py`` script can read a special file, where those directories are stored, see :ref:`bob.bio.base.installation`.
+For this purpose, the ``verify.py`` script can read a special file, where those directories are stored, see :ref:`bob.bio.base.installation`.
 By default, this file is located in your home directory, but you can specify another file on command line.
 
 The other option is to change the directories directly inside the configuration files.
@@ -74,4 +74,4 @@ Here is the list of files and replacement strings for all databases that are reg
        You can choose any of the frame databases, i.e., the ``frames_images_DB`` directory containing the original data, or the ``aligned_images_DB`` containing pre-cropped faces.
 
 
-You can use the ``./bin/databases.py`` script to list, which data directories are correctly set up.
+You can use the ``databases.py`` script to list, which data directories are correctly set up.
