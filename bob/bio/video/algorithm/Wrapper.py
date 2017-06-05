@@ -260,30 +260,6 @@ class Wrapper (bob.bio.base.algorithm.Algorithm):
     """
     return self.algorithm.read_model(filename)
 
-  def read_probe(self, filename):
-    """read_probe(filename) -> probe
-
-    Reads the probe using the algorithm's ``read_probe`` function to read the probe features of the single frames.
-
-    **Parameters:**
-
-    filename : str
-      The name of the frame container containing the probe file.
-
-    **Returns:**
-
-    probe : :py:class:`bob.bio.video.FrameContainer`
-      The frames of the probe file.
-    """
-    # TODO: check if it is really necessary that we read other types than FrameContainers here...
-    try:
-      if self.compressed_io:
-        return utils.load_compressed(filename, self.algorithm.read_probe)
-      else:
-        return utils.FrameContainer(bob.io.base.HDF5File(filename), self.algorithm.read_probe)
-    except IOError:
-      return self.algorithm.read_probe(filename)
-
   def score(self, model, probe):
     """score(model, probe) -> score
 
