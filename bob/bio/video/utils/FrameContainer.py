@@ -72,6 +72,22 @@ class FrameContainer:
       if not numpy.allclose(a[1], b[1]): return False
     return True
 
+  def as_array(self):
+    """Returns the data of frames as a numpy array.
+
+    Returns
+    -------
+    numpy.ndarray
+        The frames are returned as an array with the shape of (n_frames, ...)
+        like a video.
+    """
+    def _reader(frame):
+      # Each frame is assumed to be an image here. We make it a single frame
+      # video here by expanding its dimensions. This way it can be used with
+      # the vstack_features function.
+      return frame[1][None, ...]
+    return bob.bio.base.vstack_features(_reader, self._frames, same_size=True)
+
 def save_compressed(frame_container, filename, save_function, create_link=True):
   hdf5 = bob.bio.base.open_compressed(filename, 'w')
   frame_container.save(hdf5, save_function)
