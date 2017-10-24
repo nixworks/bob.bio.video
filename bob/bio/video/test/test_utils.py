@@ -38,6 +38,9 @@ def test_frame_container():
       assert abs(quality - index/5.) < 1e-8
       assert numpy.allclose(test_data[index], data)
 
+    # test as_array method
+    assert numpy.allclose(read.as_array(), test_data)
+
   finally:
     if os.path.exists(filename):
       os.remove(filename)
