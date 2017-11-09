@@ -38,7 +38,7 @@ class YoutubeBioFile(VideoBioFile):
             fc = FrameContainer()
             files = self.files(directory, extension)
             for f in frame_selector(files):
-                file_name = os.path.join(self.make_path(directory, ''), f)
+                file_name = os.path.join(self.make_path(directory, ''), f[0])
                 fc.add(os.path.basename(file_name), bob.io.base.load(file_name))
             return fc
         else:
