@@ -24,6 +24,9 @@ import bob.bio.base
 from bob.bio.base.test.utils import db_available
 from bob.bio.base.test.test_database_implementations import check_database_zt
 from bob.bio.face.test.test_databases import _check_annotations
+import pkg_resources
+from ..database.youtube import YoutubeBioFile
+import os
 
 
 @db_available('youtube')
@@ -49,3 +52,25 @@ def test_mobio():
     except IOError as e:
         raise SkipTest(
             "The database could not be queried; probably the db.sql3 file is missing. Here is the error: '%s'" % e)
+
+class YoutubeFile(object):
+    def __init__(self, client_id, path, id):
+        self.client_id = client_id
+        self.path = path
+        self.id = id
+
+def test_youtube_load_method():
+    """
+    Test the load method of the YoutubeBioFile class.
+    """
+    f = YoutubeFile(1, "", 1)
+
+    youtube_bio_file = YoutubeBioFile(f)
+
+    test_file = pkg_resources.resource_filename('bob.bio.video', 'test/data/sand_face/image_2.png')
+
+    directory = os.path.split(test_file)[0]
+
+    frame_container = youtube_bio_file.load(directory=directory, extension=".jpg")
+
+    assert (len(frame_container)==2)
