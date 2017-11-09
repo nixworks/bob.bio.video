@@ -25,8 +25,6 @@ from bob.bio.base.test.utils import db_available
 from bob.bio.base.test.test_database_implementations import check_database_zt
 from bob.bio.face.test.test_databases import _check_annotations
 import pkg_resources
-from ..database.youtube import YoutubeBioFile
-import os
 
 
 @db_available('youtube')
@@ -54,6 +52,7 @@ def test_mobio():
             "The database could not be queried; probably the db.sql3 file is missing. Here is the error: '%s'" % e)
 
 
+@db_available('youtube')
 def test_youtube_load_method():
     """
     Test the load method of the YoutubeBioFile class.
@@ -61,15 +60,16 @@ def test_youtube_load_method():
 
     database = bob.bio.base.load_resource('youtube', 'database', preferred_package='bob.bio.video')
 
-    f = database.all_files()[0]
+    try:
 
-    youtube_bio_file = YoutubeBioFile(f)
+        youtube_bio_file = database.all_files()[0]
 
-    test_file = pkg_resources.resource_filename('bob.bio.video', 'test/data/Aaron_Eckhart/0/image_1.jpg')
+    except IOError as e:
 
-    directory = os.path.split(test_file)[0]
+        raise SkipTest(
+            "The database could not be queried; probably the db.sql3 file is missing. Here is the error: '%s'" % e)
 
-    directory = os.path.join(directory, os.pardir, os.pardir)
+    directory = pkg_resources.resource_filename('bob.bio.video', 'test/data')
 
     frame_container = youtube_bio_file.load(directory=directory, extension=".jpg")
 
