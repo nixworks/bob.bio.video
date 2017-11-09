@@ -53,23 +53,23 @@ def test_mobio():
         raise SkipTest(
             "The database could not be queried; probably the db.sql3 file is missing. Here is the error: '%s'" % e)
 
-class YoutubeFile(object):
-    def __init__(self, client_id, path, id):
-        self.client_id = client_id
-        self.path = path
-        self.id = id
 
 def test_youtube_load_method():
     """
     Test the load method of the YoutubeBioFile class.
     """
-    f = YoutubeFile(1, "", 1)
+
+    database = bob.bio.base.load_resource('youtube', 'database', preferred_package='bob.bio.video')
+
+    f = database.all_files()[0]
 
     youtube_bio_file = YoutubeBioFile(f)
 
-    test_file = pkg_resources.resource_filename('bob.bio.video', 'test/data/sand_face/image_2.png')
+    test_file = pkg_resources.resource_filename('bob.bio.video', 'test/data/Aaron_Eckhart/0/image_1.jpg')
 
     directory = os.path.split(test_file)[0]
+
+    directory = os.path.join(directory, os.pardir, os.pardir)
 
     frame_container = youtube_bio_file.load(directory=directory, extension=".jpg")
 
