@@ -72,6 +72,14 @@ class YoutubeBioDatabase(ZTBioDatabase):
                                     original_extension,
                                     annotation_extension)
 
+    @property
+    def original_directory(self):
+        return self._db.original_directory
+
+    @original_directory.setter
+    def original_directory(self, value):
+        self._db.original_directory = value
+
     def model_ids_with_protocol(self, groups=None, protocol=None, **kwargs):
         return self._db.model_ids(groups=groups, protocol=protocol)
 
