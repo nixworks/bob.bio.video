@@ -59,6 +59,11 @@ class YoutubeBioDatabase(ZTBioDatabase):
             annotation_extension='.labeled_faces.txt',
             **kwargs
     ):
+        from bob.db.youtube.query import Database as LowLevelDatabase
+        self._db = LowLevelDatabase(original_directory,
+                                    original_extension,
+                                    annotation_extension)
+
         # call base class constructors to open a session to the database
         super(YoutubeBioDatabase, self).__init__(
             name='youtube',
@@ -66,11 +71,6 @@ class YoutubeBioDatabase(ZTBioDatabase):
             original_extension=original_extension,
             annotation_extension=annotation_extension,
             **kwargs)
-
-        from bob.db.youtube.query import Database as LowLevelDatabase
-        self._db = LowLevelDatabase(original_directory,
-                                    original_extension,
-                                    annotation_extension)
 
     @property
     def original_directory(self):
