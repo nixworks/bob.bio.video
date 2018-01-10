@@ -8,12 +8,12 @@ from ..utils import FrameSelector
 
 
 class VideoBioFile(BioFile):
-    def __init__(self, client_id, path, file_id):
+    def __init__(self, client_id, path, file_id, **kwargs):
         """
         Initializes this File object with an File equivalent for
         VoxForge database.
         """
-        super(VideoBioFile, self).__init__(client_id=client_id, path=path, file_id=file_id)
+        super(VideoBioFile, self).__init__(client_id=client_id, path=path, file_id=file_id, **kwargs)
 
     def load(self, directory=None, extension='.avi', frame_selector=FrameSelector()):
         return frame_selector(self.make_path(directory, extension))
