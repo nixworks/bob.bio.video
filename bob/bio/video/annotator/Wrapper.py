@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from bob.bio.face.annotator import Base
 from bob.ip.facedetect import bounding_box_from_annotation
 from bob.bio.base import load_resource
@@ -35,7 +36,7 @@ def normalize_annotations(annotations, validator, max_age=-1):
   age = 0
 
   for k, annot in annotations.items():
-    if validator(annot):
+    if annot and validator(annot):
       current = annot
       age = 0
     elif max_age < 0 or age < max_age:
@@ -61,7 +62,7 @@ def min_face_size_validator(annotations, min_face_size=32):
   bool
       True, if the face is large enough.
   """
-  bbx = bounding_box_from_annotation(**annotations)
+  bbx = bounding_box_from_annotation(source='direct', **annotations)
   if bbx.size < 32:
     return False
   return True
@@ -103,10 +104,10 @@ class Wrapper(Base):
   def annotate(self, frames, **kwargs):
     if isinstance(frames, utils.FrameContainer):
       frames = frames.as_array()
-    annotations = {}
+    annotations = OrderedDict()
     for i, frame in enumerate(frames):
       annotations[str(i)] = self.annotator(frame, **kwargs)
     if self.normalize:
-      annotations = dict(normalize_annotations(
+      annotations = OrderedDict(normalize_annotations(
           annotations, self.validator, self.max_age))
     return annotations
