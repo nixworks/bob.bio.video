@@ -2,70 +2,9 @@ from collections import OrderedDict
 from bob.bio.face.annotator import Base
 from bob.ip.facedetect import bounding_box_from_annotation
 from bob.bio.base import load_resource
+from bob.bio.face.annotator import min_face_size_validator
 
 from .. import utils
-
-
-def normalize_annotations(annotations, validator, max_age=-1):
-  """Normalizes the annotations of one video sequence. It fills the
-  annotations for frames from previous ones if the annotation for the current
-  frame is not valid.
-
-  Parameters
-  ----------
-  annotations : dict
-      A dict of dict where the keys to the first dict are frame indices as
-      strings (starting from 0). The inside dicts contain annotations for
-      that frame.
-  validator : callable
-      Takes a dict (annotations) and returns True if the annotations are
-      valid. This can be check based on minimal face size for example.
-  max_age : :obj:`int`, optional
-      An integer indicating for a how many frames a detected face is valid if
-      no detection occurs after such frame. A value of -1 == forever
-
-  Yields
-  ------
-  str
-      The index of frame.
-  dict
-      The corrected annotations of the frame.
-  """
-  # the annotations for the current frame
-  current = {}
-  age = 0
-
-  for k, annot in annotations.items():
-    if annot and validator(annot):
-      current = annot
-      age = 0
-    elif max_age < 0 or age < max_age:
-      age += 1
-    else:  # no detections and age is larger than maximum allowed
-      current = {}
-
-    yield k, current
-
-
-def min_face_size_validator(annotations, min_face_size=32):
-  """Validates annotations based on face's minimal size.
-
-  Parameters
-  ----------
-  annotations : dict
-      The annotations in dictionary format.
-  min_face_size : int, optional
-      The minimal size of a face.
-
-  Returns
-  -------
-  bool
-      True, if the face is large enough.
-  """
-  bbx = bounding_box_from_annotation(source='direct', **annotations)
-  if bbx.size < 32:
-    return False
-  return True
 
 
 class Wrapper(Base):
@@ -98,7 +37,7 @@ class Wrapper(Base):
     self.max_age = max_age
 
     # load annotator configuration
-    if isinstance(annotator, basestring):
+    if isinstance(annotator, str):
       self.annotator = load_resource(annotator, "annotator")
 
   def annotate(self, frames, **kwargs):
