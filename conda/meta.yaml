@@ -61,6 +61,10 @@ test:
     - coverage
     - sphinx
     - sphinx_rtd_theme
+    - bob.db.atnt
+    - bob.db.mobio
+    - bob.db.youtube
+    - gridtk
 
 about:
   home: https://www.idiap.ch/software/bob/
