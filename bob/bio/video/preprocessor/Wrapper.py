@@ -54,7 +54,8 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
                  frame_selector=utils.FrameSelector(),
                  quality_function=None,
                  compressed_io=False,
-                 read_original_data=None
+                 read_original_data=None,
+                 quality_assessment_function=None
                  ):
 
         def _read_video_data(biofile, directory, extension):
@@ -78,11 +79,13 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
             preprocessor=preprocessor,
             frame_selector=frame_selector,
             compressed_io=compressed_io,
-            read_original_data=read_original_data
+            read_original_data=read_original_data,
+            quality_assessment_function=quality_assessment_function
         )
 
         self.quality_function = quality_function
         self.compressed_io = compressed_io
+        sels.quality_assessment_function = quality_assessment_function
 
     def _check_data(self, frames):
         """Checks if the given video is in the desired format."""
@@ -133,7 +136,14 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
                 else:
                     quality = None
                 # add image to frame container
-                fc.add(index, preprocessed, quality)
+                if self.quality_assessment_function is not None:
+
+                    if self.quality_assessment_function(quality): #quality satisfies our criteria
+
+                        fc.add(index, preprocessed, quality)
+
+                else:
+                    fc.add(index, preprocessed, quality)
 
         return fc
 
