@@ -85,7 +85,7 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
 
         self.quality_function = quality_function
         self.compressed_io = compressed_io
-        sels.quality_assessment_function = quality_assessment_function
+        self.quality_assessment_function = quality_assessment_function
 
     def _check_data(self, frames):
         """Checks if the given video is in the desired format."""
@@ -121,6 +121,8 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
         annots = None
         fc = utils.FrameContainer()
 
+        quality_index = 0
+
         for index, frame, _ in frames:
             # if annotations are given, we take them
             if annotations is not None: annots = annotations[index]
@@ -140,7 +142,8 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
 
                     if self.quality_assessment_function(quality): #quality satisfies our criteria
 
-                        fc.add(index, preprocessed, quality)
+                        fc.add(quality_index, preprocessed) # no need to add quality here because we already addressed it
+                        quality_index += 1
 
                 else:
                     fc.add(index, preprocessed, quality)
