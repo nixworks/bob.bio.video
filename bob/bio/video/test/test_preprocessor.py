@@ -42,6 +42,42 @@ def test_annotations():
     assert numpy.allclose(preprocessed[0][1],
                           bob.io.base.load(pkg_resources.resource_filename("bob.bio.face.test", "data/cropped.hdf5")))
 
+
+def test_missing_annotations():
+
+    class TestPreproc(bob.bio.base.preprocessor.Preprocessor):
+        # ==========================================================================
+        def __init__(self):
+            super(TestPreproc, self).__init__()
+        def __call__(self, image, annotations=None):
+            if annotations is None:
+                return None
+            else:
+                return image.shape[0]
+
+    # load test video
+    original_path = pkg_resources.resource_filename("bob.bio.video.test", "")
+    video_object = bob.bio.video.database.VideoBioFile(client_id=1, file_id=1, path="data/testvideo")
+
+    frame_selector = bob.bio.video.FrameSelector(max_number_of_frames = 4, selection_style="first")
+    preprocessor = bob.bio.video.preprocessor.Wrapper(TestPreproc(), frame_selector, compressed_io=False)
+
+    video = preprocessor.read_original_data(video_object,
+                                            original_path, ".avi")
+
+    frame_annots = {'bottomright': (200, 200), 'topleft': (100, 100)}
+    annotations = {}
+    annotations["0"] = frame_annots
+    annotations["1"] = {}
+    annotations["3"] = frame_annots
+
+    preprocessed_video = preprocessor(video, annotations)
+
+    assert len(preprocessed_video) == 2
+    assert preprocessed_video[0][1] == 3
+    assert [x[0] for x in preprocessed_video] == ['0', '3']
+
+
 def test_detect():
 
     # load test video

@@ -115,12 +115,14 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
         preprocessed : :py:class:`bob.bio.video.FrameContainer`
           A frame container that contains the preprocessed frames.
         """
-        annots = None
+
         fc = utils.FrameContainer()
 
         for index, frame, _ in frames:
-            # if annotations are given, we take them
-            if annotations is not None: annots = annotations[index] if index in annotations.keys() else None
+
+            annots = None
+            # if annotations are given, and if particular frame annotations are not missing we take them:
+            if annotations is not None and index in annotations.keys() and annotations[index]: annots = annotations[index]
 
             # preprocess image (by default: detect a face)
             preprocessed = self.preprocessor(frame, annots)
