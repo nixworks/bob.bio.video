@@ -73,9 +73,9 @@ def test_missing_annotations():
 
     preprocessed_video = preprocessor(video, annotations)
 
-    assert len(preprocessed_video) == 2
+    assert len(preprocessed_video) == 3
     assert preprocessed_video[0][1] == 3
-    assert [x[0] for x in preprocessed_video] == ['0', '3']
+    assert [x[0] for x in preprocessed_video] == ['0', '1', '3']
 
 
 def test_detect():

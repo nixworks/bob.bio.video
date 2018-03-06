@@ -120,9 +120,8 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
 
         for index, frame, _ in frames:
 
-            annots = None
             # if annotations are given, and if particular frame annotations are not missing we take them:
-            if annotations is not None and index in annotations.keys() and annotations[index]: annots = annotations[index]
+            annots = annotations[index] if annotations is not None and index in annotations else None
 
             # preprocess image (by default: detect a face)
             preprocessed = self.preprocessor(frame, annots)
