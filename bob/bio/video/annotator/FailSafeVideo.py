@@ -41,7 +41,7 @@ class FailSafeVideo(Base):
     if isinstance(frames, utils.FrameContainer):
       frames = frames.as_array()
     annotations = OrderedDict()
-    current = {}
+    current = None
     age = 0
     for i, frame in enumerate(frames):
       for annotator in self.annotators:
@@ -54,7 +54,7 @@ class FailSafeVideo(Base):
           age += 1
           break
         else:  # no detections and age is larger than maximum allowed
-          current = {}
+          current = None
 
         if current is not annot:
           logger.debug("Annotator `%s' failed.", annotator)

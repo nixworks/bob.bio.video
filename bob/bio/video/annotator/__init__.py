@@ -28,7 +28,7 @@ def normalize_annotations(annotations, validator, max_age=-1):
         The corrected annotations of the frame.
     """
     # the annotations for the current frame
-    current = {}
+    current = None
     age = 0
 
     for k, annot in annotations.items():
@@ -38,7 +38,7 @@ def normalize_annotations(annotations, validator, max_age=-1):
         elif max_age < 0 or age < max_age:
             age += 1
         else:  # no detections and age is larger than maximum allowed
-            current = {}
+            current = None
 
         yield k, current
 
