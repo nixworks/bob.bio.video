@@ -15,9 +15,9 @@
    :target: https://pypi.python.org/pypi/bob.bio.video
 
 
-=========
+============================================
  Run video face recognition algorithms
-=========
+============================================
 
 This package is part of the signal-processing and machine learning toolbox
 Bob_.
@@ -28,7 +28,7 @@ In this package, wrapper classes are provide, which allow to run traditional ima
 
 
 Installation
-------------
+--------------
 
 Complete Bob's `installation`_ instructions. Then, to install this package,
 run::
@@ -37,7 +37,7 @@ run::
 
 
 Contact
--------
+---------
 
 For questions or reporting issues to this software package, contact our
 development `mailing list`_.
