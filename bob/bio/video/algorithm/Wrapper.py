@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # vim: set fileencoding=utf-8 :
 
+import six
 import bob.bio.base
 import bob.io.base
 
@@ -36,7 +37,7 @@ class Wrapper (bob.bio.base.algorithm.Algorithm):
       compressed_io = False
   ):
     # load algorithm configuration
-    if isinstance(algorithm, str):
+    if isinstance(algorithm, six.string_types):
       self.algorithm = bob.bio.base.load_resource(algorithm, "algorithm")
     elif isinstance(algorithm, bob.bio.base.algorithm.Algorithm):
       self.algorithm = algorithm

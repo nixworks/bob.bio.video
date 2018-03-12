@@ -1,10 +1,11 @@
+import six
 from collections import OrderedDict
 from bob.bio.face.annotator import Base
-from bob.ip.facedetect import bounding_box_from_annotation
 from bob.bio.base import load_resource
 from bob.bio.face.annotator import min_face_size_validator
 
 from .. import utils
+from . import normalize_annotations
 
 
 class Wrapper(Base):
@@ -37,7 +38,7 @@ class Wrapper(Base):
     self.max_age = max_age
 
     # load annotator configuration
-    if isinstance(annotator, str):
+    if isinstance(annotator, six.string_types):
       self.annotator = load_resource(annotator, "annotator")
 
   def annotate(self, frames, **kwargs):

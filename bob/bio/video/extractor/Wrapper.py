@@ -4,6 +4,7 @@
 import bob.bio.base
 import bob.io.base
 import os
+import six
 
 from .. import utils
 
@@ -36,7 +37,7 @@ class Wrapper (bob.bio.base.extractor.Extractor):
       compressed_io = False
   ):
     # load extractor configuration
-    if isinstance(extractor, str):
+    if isinstance(extractor, six.string_types):
       self.extractor = bob.bio.base.load_resource(extractor, "extractor")
     elif isinstance(extractor, bob.bio.base.extractor.Extractor):
       self.extractor = extractor

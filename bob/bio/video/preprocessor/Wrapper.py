@@ -3,6 +3,7 @@
 
 import bob.bio.base
 import bob.io.base
+import six
 
 from .. import utils
 
@@ -65,7 +66,7 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
           read_original_data = _read_video_data
 
         # load preprocessor configuration
-        if isinstance(preprocessor, str):
+        if isinstance(preprocessor, six.string_types):
             self.preprocessor = bob.bio.base.load_resource(preprocessor, "preprocessor")
         elif isinstance(preprocessor, bob.bio.base.preprocessor.Preprocessor):
             self.preprocessor = preprocessor
