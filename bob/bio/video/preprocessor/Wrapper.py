@@ -136,6 +136,9 @@ class Wrapper(bob.bio.base.preprocessor.Preprocessor):
                 # add image to frame container
                 fc.add(index, preprocessed, quality)
 
+        if not len(fc):
+          return None
+
         return fc
 
 
