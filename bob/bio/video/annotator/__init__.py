@@ -1,7 +1,3 @@
-from .Wrapper import Wrapper
-from .FailSafeVideo import FailSafeVideo
-
-
 def normalize_annotations(annotations, validator, max_age=-1):
     """Normalizes the annotations of one video sequence. It fills the
     annotations for frames from previous ones if the annotation for the current
@@ -15,7 +11,7 @@ def normalize_annotations(annotations, validator, max_age=-1):
         that frame.
     validator : callable
         Takes a dict (annotations) and returns True if the annotations are
-        valid. This can be check based on minimal face size for example.
+        valid. This can be a check based on minimal face size for example.
     max_age : :obj:`int`, optional
         An integer indicating for a how many frames a detected face is valid if
         no detection occurs after such frame. A value of -1 == forever
@@ -41,6 +37,10 @@ def normalize_annotations(annotations, validator, max_age=-1):
             current = None
 
         yield k, current
+
+
+from .Wrapper import Wrapper
+from .FailSafeVideo import FailSafeVideo
 
 
 # gets sphinx autodoc done right - don't remove it
