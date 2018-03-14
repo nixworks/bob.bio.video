@@ -12,7 +12,8 @@ def normalize_annotations(annotations, validator, max_age=-1):
       work.
   validator : callable
       Takes a dict (annotations) and returns True if the annotations are valid.
-      This can be a check based on minimal face size for example.
+      This can be a check based on minimal face size for example: see
+      :any:`bob.bio.face.annotator.min_face_size_validator`.
   max_age : :obj:`int`, optional
       An integer indicating for a how many frames a detected face is valid if
       no detection occurs after such frame. A value of -1 == forever
