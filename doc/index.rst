@@ -24,6 +24,7 @@ Users Guide
    :maxdepth: 2
 
    implementation
+   annotators
 
 Reference Manual
 ================

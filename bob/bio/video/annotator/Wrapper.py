@@ -1,33 +1,39 @@
 import six
-from collections import OrderedDict
-from bob.bio.face.annotator import Base
-from bob.bio.base import load_resource
-from bob.bio.face.annotator import min_face_size_validator
-
-from .. import utils
-from . import normalize_annotations
+import collections
+import bob.bio.base
+import bob.bio.face
+from . import Base, normalize_annotations
 
 
 class Wrapper(Base):
-  """Annotates video files.
-  This annotator does not support annotating only select frames of a video.
+  """Annotates video files using the provided image annotator.
+  See the documentation of :any:`Base` too.
 
-  Attributes
+  Parameters
   ----------
-  annotator : :any:`Base`
-      The image annotator to be used.
+  annotator : :any:`bob.bio.base.annotator.Annotator` or str
+      The image annotator to be used. The annotator could also be the name of a
+      bob.bio.annotator resource which will be loaded.
   max_age : int
       see :any:`normalize_annotations`.
   normalize : bool
       If True, it will normalize annotations using :any:`normalize_annotations`
   validator : object
-      see :any:`normalize_annotations` and :any:`min_face_size_validator`.
+      See :any:`normalize_annotations` and
+      :any:`bob.bio.face.annotator.min_face_size_validator` for one example.
+
+
+  .. warning::
+
+      You should only set ``normalize`` to True only if you are annotating
+      **all** frames of the video file.
+
   """
 
   def __init__(self,
                annotator,
-               normalize=True,
-               validator=min_face_size_validator,
+               normalize=False,
+               validator=bob.bio.face.annotator.min_face_size_validator,
                max_age=-1,
                **kwargs
                ):
@@ -39,15 +45,16 @@ class Wrapper(Base):
 
     # load annotator configuration
     if isinstance(annotator, six.string_types):
-      self.annotator = load_resource(annotator, "annotator")
+      self.annotator = bob.bio.base.load_resource(annotator, "annotator")
 
   def annotate(self, frames, **kwargs):
-    if isinstance(frames, utils.FrameContainer):
-      frames = frames.as_array()
-    annotations = OrderedDict()
-    for i, frame in enumerate(frames):
+    """See :any:`Base.annotate`
+    """
+    frames, frame_ids = self.frame_and_frame_ids(frames)
+    annotations = collections.OrderedDict()
+    for i, frame in zip(frame_ids, frames):
       annotations[str(i)] = self.annotator(frame, **kwargs)
     if self.normalize:
-      annotations = OrderedDict(normalize_annotations(
+      annotations = collections.OrderedDict(normalize_annotations(
           annotations, self.validator, self.max_age))
     return annotations
