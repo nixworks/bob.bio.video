@@ -1,6 +1,3 @@
-from ..utils import FrameContainer as _FrameContainer
-
-
 def normalize_annotations(annotations, validator, max_age=-1):
   """Normalizes the annotations of one video sequence. It fills the
   annotations for frames from previous ones if the annotation for the current
