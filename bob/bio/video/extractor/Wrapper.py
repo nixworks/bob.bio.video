@@ -83,8 +83,13 @@ class Wrapper (bob.bio.base.extractor.Extractor):
     for index, frame, quality in self.frame_selector(frames):
       # extract features
       extracted = self.extractor(frame)
-      # add features to new frame container
-      fc.add(index, extracted, quality)
+      if extracted is not None:
+        # add features to new frame container
+        fc.add(index, extracted, quality)
+
+    if not len(fc):
+      return None
+
     return fc
 
 
