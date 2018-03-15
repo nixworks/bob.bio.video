@@ -7,6 +7,7 @@ import bob.io.image
 import bob.io.video
 import numpy
 import os
+import six
 
 import logging
 logger = logging.getLogger("bob.bio.video")
@@ -49,7 +50,7 @@ class FrameSelector:
     When giving ``str`` or ``[str]`` data, the given ``load_function`` is used to read the data from file.
     """
     # if given a string, first load the video
-    if isinstance(data, str):
+    if isinstance(data, six.string_types):
       logger.debug("Loading video file '%s'", data)
       data = load_function(data)
 

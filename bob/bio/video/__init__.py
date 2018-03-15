@@ -4,6 +4,7 @@ from . import extractor
 from . import algorithm
 from . import database
 from . import test
+from . import annotator
 
 def get_config():
   """Returns a string containing the configuration information.
