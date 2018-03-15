@@ -29,7 +29,7 @@ class Base(bob.bio.base.annotator.Annotator):
     super(Base, self).__init__(read_original_data=read_original_data, **kwargs)
 
   @staticmethod
-  def frame_and_frame_ids(frames):
+  def frame_ids_and_frames(frames):
     """Normalizes the frames parameter into a numpy array and a list of
     indices.
 
@@ -40,10 +40,10 @@ class Base(bob.bio.base.annotator.Annotator):
 
     Returns
     -------
-    frames : :any:`numpy.array`
-        The frames of the video file as a numpy array.
     frame_ids : list
         A list of strings that represent the frame ids.
+    frames : :any:`numpy.array`
+        The frames of the video file as a numpy array.
     """
     if isinstance(frames, utils.FrameContainer):
       frame_ids = [fid for fid, _, _ in frames]
@@ -51,7 +51,7 @@ class Base(bob.bio.base.annotator.Annotator):
     else:  # frames is already a numpy.array
       frame_ids = [str(i) for i in range(len(frames))]
 
-    return frames, frame_ids
+    return frame_ids, frames
 
   def annotate(self, frames, **kwargs):
     """Annotates videos.
@@ -72,7 +72,7 @@ class Base(bob.bio.base.annotator.Annotator):
 
     .. note::
 
-        You can use the :any:`Base.frame_and_frame_ids` functions to normalize
+        You can use the :any:`Base.frame_ids_and_frames` functions to normalize
         the input in your implementation.
     """
     raise NotImplementedError()

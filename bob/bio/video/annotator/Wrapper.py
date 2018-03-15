@@ -23,6 +23,8 @@ class Wrapper(Base):
       :any:`bob.bio.face.annotator.min_face_size_validator` for one example.
 
 
+  Please see :any:`Base` for more accepted parameters.
+
   .. warning::
 
       You should only set ``normalize`` to True only if you are annotating
@@ -50,10 +52,10 @@ class Wrapper(Base):
   def annotate(self, frames, **kwargs):
     """See :any:`Base.annotate`
     """
-    frames, frame_ids = self.frame_and_frame_ids(frames)
+    frame_ids, frames = self.frame_ids_and_frames(frames)
     annotations = collections.OrderedDict()
     for i, frame in zip(frame_ids, frames):
-      annotations[str(i)] = self.annotator(frame, **kwargs)
+      annotations[i] = self.annotator(frame, **kwargs)
     if self.normalize:
       annotations = collections.OrderedDict(normalize_annotations(
           annotations, self.validator, self.max_age))

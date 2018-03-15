@@ -20,7 +20,7 @@ class FailSafeVideo(Base):
       could have different results. For example the bounding box of one
       annotator be totally different from another annotator.
 
-  Attributes
+  Parameters
   ----------
   annotators : list
       A list of annotators to try.
@@ -30,6 +30,9 @@ class FailSafeVideo(Base):
       then you can use the :any:`bob.bio.video.annotator.Wrapper` instead.
   validator : callable
       A function that takes the annotations of a frame and validates it.
+
+
+  Please see :any:`Base` for more accepted parameters.
   """
 
   def __init__(self, annotators, max_age=15,
@@ -48,7 +51,7 @@ class FailSafeVideo(Base):
   def annotate(self, frames, **kwargs):
     """See :any:`Base.annotate`
     """
-    frames, frame_ids = self.frame_and_frame_ids(frames)
+    frame_ids, frames = self.frame_ids_and_frames(frames)
     annotations = collections.OrderedDict()
     current = None
     age = 0
@@ -68,5 +71,5 @@ class FailSafeVideo(Base):
         if current is not annot:
           logger.debug("Annotator `%s' failed.", annotator)
 
-      annotations[str(i)] = current
+      annotations[i] = current
     return annotations

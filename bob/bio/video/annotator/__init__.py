@@ -30,7 +30,7 @@ def normalize_annotations(annotations, validator, max_age=-1):
   age = 0
 
   for k, annot in annotations.items():
-    if annot and validator(annot):
+    if validator(annot):
       current = annot
       age = 0
     elif max_age < 0 or age < max_age:
